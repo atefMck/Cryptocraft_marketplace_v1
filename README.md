@@ -1,53 +1,24 @@
-# React Webpack Typescript Starter
-> Minimal starter with hot module replacement (HMR) for rapid development.
 
-* **[React](https://facebook.github.io/react/)** (17.x)
-* **[Webpack](https://webpack.js.org/)** (5.x)
-* **[Typescript](https://www.typescriptlang.org/)** (4.x)
-* **[Hot Module Replacement (HMR)](https://webpack.js.org/concepts/hot-module-replacement/)** ([React Hot Loader](https://github.com/gaearon/react-hot-loader))
-* Production build script (Webpack)
-* Image loading/minification ([Image Webpack Loader](https://github.com/tcoopman/image-webpack-loader))
-* [SASS](http://sass-lang.com/) support
-* Code linting ([ESLint](https://github.com/eslint/eslint)) and formatting ([Prettier](https://github.com/prettier/prettier))
-* Test framework ([Jest](https://facebook.github.io/jest/))
+# Cryptocraft - Storefront (WIP)
+Storefront front for safely trading your Minecraft NFTs on the internet.
 
-## Installation
-1. Clone/download repo
-2. `yarn install` (or `npm install` for npm)
 
-## Usage
-**Development**
 
-`yarn run start-dev`
 
-* Build app continuously (HMR enabled)
-* App served @ `http://localhost:8080`
+## Authors
+Atef Mechken : [LinkedIn] | [GitHub] | [Twitter]
 
-**Production**
+[LinkedIn]: <https://www.linkedin.com/in/atefmck/>
+[GitHub]: <https://github.com/atefMck>
+[Twitter]: <https://twitter.com/xFreak666>
 
-`yarn run start-prod`
+## Author description
+Since my early years, I have been pretty active in social activity such as my 2 years as a member of Electronic Tunisian Legends one of the more popular organisation in media and vidéo game community in Tunisia.
+Also my experience as a Co-Marketing Manager in Hult Prize University of Souse helped me a lot enlarging my knowledge in the marketing field, combined with my computer skills I managed to be the winner team of the Hult Prize 2019 local competition and qualified me to reach the regional of that year.
 
-* Build app once (HMR disabled) to `/dist/`
-* App served @ `http://localhost:3000`
 
----
+## Tech Stack
 
-**All commands**
+**Client:** React
 
-Command | Description
---- | ---
-`yarn run start-dev` | Build app continuously (HMR enabled) and serve @ `http://localhost:8080`
-`yarn run start-prod` | Build app once (HMR disabled) to `/dist/` and serve @ `http://localhost:3000`
-`yarn run build` | Build app to `/dist/`
-`yarn run test` | Run tests
-`yarn run lint` | Run linter
-`yarn run lint --fix` | Run linter and fix issues
-`yarn run start` | (alias of `yarn run start-dev`)
-
-**Note**: replace `yarn` with `npm` in `package.json` if you use npm.
-
-## See also
-* [React Webpack Babel Starter](https://github.com/vikpe/react-webpack-babel-starter)
-* [Snowpack](https://github.com/snowpackjs/snowpack)
-* [Create React App](https://github.com/facebook/create-react-app)
-* [Isomorphic Webapp Starter](https://github.com/vikpe/isomorphic-webapp-starter)
+**Server:** Node, Express
