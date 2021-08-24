@@ -1,0 +1,33 @@
+/* Search Bar style */
+
+.SearchBar {
+  width: 30%;
+  position: relative;
+}
+
+.SearchBar #SearchIcon {
+  position: absolute;  
+  top: 10px;
+  left: 15px;
+  opacity: .2;
+  transition: .6s;
+}
+
+.SearchBar input {
+  width: 100%;
+  height: 30px;
+  border-radius: 10px;
+  box-shadow: none;
+  border: 1px solid rgba(0, 0, 0, .2);
+  padding-left: 40px;
+  transition: .6s;
+}
+
+.SearchBar input:focus {
+  border: 1px solid rgba(0, 0, 0, .7);
+  outline: none;
+}
+
+.SearchBar input:focus + #SearchIcon {
+  opacity: .7;
+}

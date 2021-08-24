@@ -4,6 +4,35 @@ body {
   margin: 0;
 }
 
+h4 {
+  padding: 0;
+  margin: .3rem 0;
+}
+
+button {
+  cursor: pointer;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  font-size: .9rem;
+  background-color: white;
+  color: black;
+}
+
+select {
+  border: none;
+  padding: .5rem 1rem;
+  font-family: 'Nunito', sans-serif;
+  background-color: rgb(240, 240, 240);  
+}
+
 .App {
   font-family: 'Nunito', sans-serif;
+}
+
+*{
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
 }
