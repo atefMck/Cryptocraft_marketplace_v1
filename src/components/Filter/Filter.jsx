@@ -3,6 +3,7 @@ import {StyleSheet, css} from 'aphrodite'
 import Select from 'react-select'
 
 const categoryOptions = [
+  { value: '', label: 'All' },
   { value: 'land', label: 'Land' },
   { value: 'weapons', label: 'Weapons' },
   { value: 'pets', label: 'Pets' },
@@ -10,13 +11,10 @@ const categoryOptions = [
 ]
 
 const sortOptions = [
-  { value: 'recentlist', label: 'Recently Listed' },
-  { value: 'recentcreate', label: 'Recently Created' },
-  { value: 'recentsold', label: 'Recently Sold' },
+  { value: '', label: 'Nothing' },
   { value: 'price', label: 'Price' },
   { value: 'views', label: 'Most Viewed' },
-  { value: 'like', label: 'Most Liked' },
-  { value: 'old', label: 'Oldest' },
+  { value: 'likes', label: 'Most Liked' },
 ]
 
 
