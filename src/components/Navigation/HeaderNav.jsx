@@ -14,8 +14,8 @@ const HeaderNav = () => {
       <ul className={css(styles.navLink)}>
         <li onClick={() => history.push('/')}>Home</li>
         <li onClick={() => history.push('/marketplace')}>Marketplace</li>
-        <li>Stats</li>
-        <li>Contact Us</li>
+        <li onClick={() => history.push('/stats')}>Stats</li>
+        <li onClick={() => history.push('/contact')}>Contact Us</li>
       </ul>
       <ul className={css(styles.navLink)}>
         <li>Profile</li>
@@ -27,6 +27,7 @@ const HeaderNav = () => {
 
 const styles = StyleSheet.create({
   logoStyle: {
+    marginLeft: '10px',
     width: '135px',
     height: '40px',
   },
@@ -34,9 +35,11 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: 'white',
     height: '60px',
+    width: '100%',
+    position: 'fixed',
+    zIndex: '5',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '.2rem 1rem',
     boxShadow: '0px 5px 10px rgba(0, 0, 0, .3)',
     ':nth-child(1n) > ul': {
       display: 'flex',

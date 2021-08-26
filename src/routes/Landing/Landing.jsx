@@ -15,7 +15,7 @@ const Landing = () => {
 
 const styles = StyleSheet.create({
   backgroundImage: {
-    position: 'fixed',
+    position: 'absolute',
     top: '0',
     left: '-10px',
     width: '110vw',
