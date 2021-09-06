@@ -5,8 +5,11 @@ import SearchBar from '../Misc/SearchBar';
 import {StyleSheet, css} from 'aphrodite'
 
 
-const HeaderNav = () => {
+const HeaderNav = (props) => {
   const history = useHistory();
+  const { setRegister, setLogin } = props
+
+
   return (
     <div className={css(styles.headerNav)}>
       <img src={MinecraftLogo} className={css(styles.logoStyle)} alt='' />
@@ -18,8 +21,8 @@ const HeaderNav = () => {
         <li onClick={() => history.push('/contact')}>Contact Us</li>
       </ul>
       <ul className={css(styles.navLink)}>
-        <li>Profile</li>
-        <li>Wallet</li>
+        <li className={css(styles.signIn)} onClick={() => setLogin(true)}>Login</li>
+        <li className={css(styles.signUp)} onClick={() => setRegister(true)}>Register</li>
       </ul>
     </div>
   );
@@ -45,7 +48,7 @@ const styles = StyleSheet.create({
       display: 'flex',
       listStyle: 'none',
       justifyContent: 'space-between',
-      width: '130px',
+      width: '160px',
       fontWeight: '600',
     },
     ':nth-child(1n) > ul:first-of-type': {
@@ -53,6 +56,7 @@ const styles = StyleSheet.create({
     },
   },
   navLink: {
+    marginRight: '10px',
     ':nth-child(1n) > li': {
       cursor: 'pointer',
       transition: '.3s'
@@ -60,6 +64,28 @@ const styles = StyleSheet.create({
     ':nth-child(1n) > li:hover': {
       transform: 'scale(1.1)'
     },
+  },
+  signUp: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '40px',
+    width: '80px',
+    transition: '.3s',
+    backgroundColor: 'white',
+    cursor: 'pointer',
+    marginRight: '5px',
+    color: 'rgb(28,157,230)'
+  },
+  signIn: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '40px',
+    width: '80px',
+    transition: '.3s',
+    backgroundColor: 'white',
+    cursor: 'pointer',
   }
 })
 
