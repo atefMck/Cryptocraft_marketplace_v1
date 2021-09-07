@@ -5,12 +5,21 @@ import Register from './Register';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import registerImg from '../../assets/img/register.png'
+import Loader from '../Loader/Loader.jsx'
+import RegistrationSuccess from './RegistrationSuccess'
 import './Auth.css'
 
 
 const Auth = (props) => {
   const {login, register} = props;
   const { setRegister, setLogin } = props
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState({
+    display: false,
+    username: '',
+    email: ''
+  })
+
   const hideAuth = () => {setRegister(false); setLogin(false)}
   const displayAuth = (form) => {
     console.log(form === 'register')
@@ -18,16 +27,22 @@ const Auth = (props) => {
     setLogin(form === 'login');
   }
 
+  const displayLoader = (state) => {setLoading(state)}
+
+  const displaySuccess = (display, username, email) => {setSuccess({display, username, email})}
+
   return (
     <div className="AuthContainer">
       <div className={css(styles.container)}>
-      <div className={css(styles.imgContainer)}></div>
-      <form action="" className={css(styles.form)}>
-        <FontAwesomeIcon className={css(styles.close)} icon={faTimes} onClick={hideAuth} />
-        { register && <Register displayAuth={displayAuth}/>}
-        { login && <Login displayAuth={displayAuth}/>}
-      </form>
-    </div>
+        <div className={css(styles.imgContainer)}></div>
+        <div action="" className={css(styles.form)}>
+          {!loading && <FontAwesomeIcon className={css(styles.close)} icon={faTimes} onClick={hideAuth} />}
+          { (!loading && register && !success.display) && <Register displayAuth={displayAuth} displayLoader={displayLoader} displaySuccess={displaySuccess}/>}
+          { (!loading && login && !success.display) && <Login displayAuth={displayAuth} displayLoader={displayLoader}/>}
+          {(loading && !success.display) && <Loader />}
+          {success.display && <RegistrationSuccess username={success.username} email={success.email} />}
+        </div>
+      </div>
     </div>
   );
 }
