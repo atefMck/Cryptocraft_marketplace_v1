@@ -16,8 +16,13 @@ const Register = (props) => {
   const [validConfirm, setValidConfirm] = useState(false)
 
   const handleInput = (e) => {
-    const state = e.target.name.charAt(0).toUpperCase() + e.target.name.slice(1)
-    const setValue = eval(`set${state}`)
+    const statesMethods = {
+      username: setUsername,
+      email: setEmail,
+      password: setPassword,
+      confirm: setConfirm,
+    }
+    const setValue = statesMethods[e.target.name]
     setValue(e.target.value);
   }
 

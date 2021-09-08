@@ -19,17 +19,21 @@ const Auth = (props) => {
     username: '',
     email: ''
   })
+  const [error, setError] = useState('')
 
   const hideAuth = () => {setRegister(false); setLogin(false)}
   const displayAuth = (form) => {
-    console.log(form === 'register')
     setRegister(form === 'register');
     setLogin(form === 'login');
   }
 
-  const displayLoader = (state) => {setLoading(state)}
+  const displayLoader = async (state) => {await setLoading(state)}
 
   const displaySuccess = (display, username, email) => {setSuccess({display, username, email})}
+
+  useEffect(() => {
+    if (loading) setError('');
+  }, [loading]);
 
   return (
     <div className="AuthContainer">
@@ -37,10 +41,11 @@ const Auth = (props) => {
         <div className={css(styles.imgContainer)}></div>
         <div action="" className={css(styles.form)}>
           {!loading && <FontAwesomeIcon className={css(styles.close)} icon={faTimes} onClick={hideAuth} />}
-          { (!loading && register && !success.display) && <Register displayAuth={displayAuth} displayLoader={displayLoader} displaySuccess={displaySuccess}/>}
-          { (!loading && login && !success.display) && <Login displayAuth={displayAuth} displayLoader={displayLoader}/>}
+          { (!loading && register && !success.display) && <Register displayAuth={displayAuth} displayLoader={displayLoader} displaySuccess={displaySuccess} setError={setError}/>}
+          { (!loading && login && !success.display) && <Login displayAuth={displayAuth} displayLoader={displayLoader} setLogin={setLogin} hideAuth={hideAuth} setError={setError}/>}
           {(loading && !success.display) && <Loader />}
           {success.display && <RegistrationSuccess username={success.username} email={success.email} />}
+          <p style={{color: 'rgb(224, 53, 75)', height: '30px'}}>{error}</p>
         </div>
       </div>
     </div>

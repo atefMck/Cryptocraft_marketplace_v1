@@ -4,7 +4,7 @@ import { StyleSheet, css } from 'aphrodite'
 const Landing = () => {
   return (
     <div>
-      <img src="https://i.ibb.co/2N5y9Q9/traminecraftblock.png" 
+      <img src="https://i.ibb.co/2N5y9Q9/traminecraftblock.png" alt="bg"
       className={css(styles.backgroundImage)}></img>
       <div className={css(styles.mainContainer)}>
         <h1>Hello bitch</h1>

@@ -13,7 +13,7 @@ const ProfileNav = (props) => {
 
   const handleTabs = event => {
     const newTabs = tabs
-    Object.keys(tabs).map(key => {
+    Object.keys(tabs).forEach(key => {
       newTabs[key] = event.target.name === key
     })
     setTabs({...newTabs});

@@ -7,7 +7,7 @@ import {StyleSheet, css} from 'aphrodite'
 
 const HeaderNav = (props) => {
   const history = useHistory();
-  const { setRegister, setLogin } = props
+  const { setRegister, setLogin, isLogged, logOut } = props
 
 
   return (
@@ -21,8 +21,10 @@ const HeaderNav = (props) => {
         <li onClick={() => history.push('/contact')}>Contact Us</li>
       </ul>
       <ul className={css(styles.navLink)}>
-        <li className={css(styles.signIn)} onClick={() => setLogin(true)}>Login</li>
-        <li className={css(styles.signUp)} onClick={() => setRegister(true)}>Register</li>
+        { !isLogged && <li className={css(styles.signIn)} onClick={() => setLogin(true)}>Login</li>}
+        { !isLogged && <li className={css(styles.signUp)} onClick={() => setRegister(true)}>Register</li>}
+        { isLogged && <li className={css(styles.signIn)} onClick={() => history.push('/profile')}>Profile</li> }
+        { isLogged && <li className={css(styles.signUp)} onClick={() => {logOut(); history.push('/')}}>Log Out</li> }
       </ul>
     </div>
   );

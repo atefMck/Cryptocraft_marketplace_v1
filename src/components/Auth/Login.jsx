@@ -1,20 +1,54 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, css} from 'aphrodite'
+import axios from 'axios'
+import cookie from 'react-cookies'
 
 const Login = (props) => {
+  const {displayLoader, setLogin, hideAuth, setError} = props
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleInput = (e) => {
+    const statesMethods = {
+      username: setUsername,
+      password: setPassword,
+    }
+    const setValue = statesMethods[e.target.name]
+    setValue(e.target.value);
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    displayLoader(true)
+    const body = {
+      username,
+      password
+    }
+    axios.post('http://localhost:3005/users/login', body).then(res => {
+      console.log(res)
+      cookie.save('accessToken', res.data.token)
+      displayLoader(false);
+      setLogin(true)
+      hideAuth()
+    }).catch(err => {
+      displayLoader(false)
+      setError(err.response.data.message)
+    })
+  }
+
   const {displayAuth} = props
   return (
-    <div className={css(styles.form)}>
+    <form className={css(styles.form)} onSubmit={handleSubmit}>
       <h1>Sign In</h1>
       <label className={css(styles.label)}>Username</label>
-      <input className={css(styles.input)} name="username" type="text"/>
+      <input className={css(styles.input)} name="username" type="text" value={username} onChange={handleInput}/>
       <label className={css(styles.label)}>Password</label>
-      <input className={css(styles.input)} name="password" type="password"/>
+      <input className={css(styles.input)} name="password" type="password" value={password} onChange={handleInput}/>
       <div className={css(styles.row)}>
         <input className={css(styles.submit)} type="submit" value='Login'/>
         <p>Or</p><a onClick={(e) => {e.preventDefault(); displayAuth('register')}} className={css(styles.anchor)}>Sign up</a>
       </div>
-    </div>
+    </form>
   );
 }
 

@@ -10,9 +10,15 @@ const Contact = () => {
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
   
-  const handleInput = event => {
-    const setStateMethod = eval('set' + event.target.name)
-    setStateMethod(event.target.value);
+  const handleInput = (e) => {
+    const statesMethods = {
+      firstName: setFirstName,
+      lastName: setLastName,
+      email: setEmail,
+      message: setMessage,
+    }
+    const setValue = statesMethods[e.target.name]
+    setValue(e.target.value);
   }
   
   const handleSubmit = event => {

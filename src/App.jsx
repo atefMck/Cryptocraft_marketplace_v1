@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import axios from 'axios'
+import cookie from 'react-cookies'
 import Market from './routes/Market/Market';
 import Landing from './routes/Landing/Landing';
 import Contact from './routes/Contact/Contact';
@@ -12,17 +14,6 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
-import coverPhoto from './assets/img/cover.jpg'
-import profilePhoto from './assets/img/profile.jpg'
-import assets from './placeholders/placeholders'
-const user = {
-  username: 'xFreak666',
-  profilePhoto,
-  coverPhoto,
-  address: '0xeDeD14718401885a8Fd774B3382513579535215f',
-  assets,
-}
-
 
 const App = () => {
   const [register, setRegisterState] = useState(false)
@@ -30,9 +21,35 @@ const App = () => {
   const [login, setLoginState] = useState(false)
   const setLogin = (state) => setLoginState(state)
 
+  const [isLogged, setIsLogged] = useState(false)
+  const [userId, setUserId] = useState('')
+
+  const logOut = () => {
+    cookie.remove('accessToken')
+    setUserId('')
+    setIsLogged(false); 
+  }
+
+  useEffect(() => {
+    const token = cookie.load('accessToken');
+    if (token === undefined) {
+      setIsLogged(false)
+    } else {
+      axios.get('http://localhost:3005/auth/getUserId', {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      }).then(res => {
+        setIsLogged(true);
+        setUserId(res.data.userId)
+      }).catch(err => console.log(err))
+    }
+  }, [isLogged, register, login]);
+
+
   return (
     <Router>
-      <HeaderNav setRegister={setRegister} setLogin={setLogin} />
+      <HeaderNav setRegister={setRegister} setLogin={setLogin} isLogged={isLogged} logOut={logOut} />
       <div className='App'>
         
         <Switch>
@@ -42,8 +59,8 @@ const App = () => {
           <Route path='/contact'>
             <Contact />
           </Route>
-          <Route path='/account'>
-            <Account {...user}/>
+          <Route path='/profile'>
+            <Account userId={userId}/>
           </Route>
           <Route path='/'>
             <Landing />

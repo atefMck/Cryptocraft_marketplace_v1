@@ -31,6 +31,7 @@ const Market = () => {
         if (filters.sort === 'price') return (firstItem.price < secondItem.price ? 1 : -1)
         if (filters.sort === 'views') return (firstItem.views < secondItem.views ? 1 : -1)
         if (filters.sort === 'likes') return (firstItem.likes < secondItem.likes ? 1 : -1)
+        return true
       })
     }
     setItems(filteredItems);
