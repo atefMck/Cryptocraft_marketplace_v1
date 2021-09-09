@@ -36,7 +36,7 @@ const Auth = (props) => {
   }, [loading]);
 
   return (
-    <div className="AuthContainer">
+    <div className="PopupContainer">
       <div className={css(styles.container)}>
         <div className={css(styles.imgContainer)}></div>
         <div action="" className={css(styles.form)}>

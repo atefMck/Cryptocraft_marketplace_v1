@@ -99,7 +99,8 @@ const Activity = () => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: '80px 37px'
+    padding: '80px 37px',
+    borderTop: '1px solid rgba(0, 0, 0, .2)',
   },
   table: {
     width: '100%',

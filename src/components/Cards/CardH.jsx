@@ -4,7 +4,7 @@ import { faHeart, faEye } from '@fortawesome/free-solid-svg-icons'
 import { faEthereum } from '@fortawesome/free-brands-svg-icons'
 import { StyleSheet, css } from 'aphrodite'
 
-const CardH = ({name, price, seller, description, views, likes, thumbnail}) => {
+const CardH = ({name, price, seller, description, views, likes, image}) => {
   return (
     <div className={css(styles.card)}>
       <div className={css(styles.flexRow)} style={{justifyContent: 'flex-end'}}>
@@ -13,7 +13,7 @@ const CardH = ({name, price, seller, description, views, likes, thumbnail}) => {
         <FontAwesomeIcon icon={faHeart} className={css(styles.textSmall)} />
         <p className={css(styles.textSmall)} >&nbsp;{likes}</p>
       </div>
-      <img src={thumbnail} alt='Item Preview' className={css(styles.thumbnailMedium)}/>
+      <img src={image} alt='Item Preview' className={css(styles.thumbnailMedium)}/>
       <div className={css(styles.flexRow)} style={{justifyContent: 'space-between'}}>
         <h4>{name}</h4>
         <p className={css(styles.textSmall)} >Price</p>

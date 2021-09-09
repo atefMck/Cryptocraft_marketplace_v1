@@ -35,7 +35,8 @@ const ProfileNav = (props) => {
 
 const styles = StyleSheet.create({
   navBar: {
-    marginTop: '50px',
+    marginTop: '40px',
+    marginBottom: '20px',
     padding: '0 2rem',
   },
   tab: {
