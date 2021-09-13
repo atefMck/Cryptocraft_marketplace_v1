@@ -1,63 +1,79 @@
 import React, {useState, useEffect} from 'react';
+import { useParams } from "react-router-dom";
 import { StyleSheet, css } from 'aphrodite'
+import axios from 'axios'
+import cookie from 'react-cookies'
+
 import CardListH from '../../components/Cards/CardListH';
+import TokenCard from '../../components/Cards/TokenCard'
+import ListingCard from '../../components/Cards/ListingCard'
 import ProfileNav from '../../components/Navigation/ProfileNav';
 import Activity from '../../components/Activity/Activity';
 import WalletLinker from '../../components/WalletLinker/WalletLinker.jsx'
+import CreatePanel from '../../components/CreatePanel/CreatePanel'
+
 import defaultCover from '../../assets/img/defaultcover.jpg';
 import defaultProfile from '../../assets/img/defaultprofile.jpg';
-import axios from 'axios'
-import cookie from 'react-cookies'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSlidersH, faShareAlt, faExclamation, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faSlidersH, faShareAlt, faExclamation, faPlus, faCopy } from '@fortawesome/free-solid-svg-icons'
+
+import {shortenAddress} from '../../utils/StringUtils';
 
 
 const Account = (props) => {
   const [user, setUser] = useState({})
-  const [linkPanel, setLinkPanel] = useState({})
+  const [linkPanel, setLinkPanel] = useState(false)
+  const [createPanel, setCreatePanel] = useState(false)
   const [filters, setFilters] = useState({
     forSale: false,
     owned: false,
     favorite: false,
-    activity: true
+    activity: false
   })
   const [isCurrentUser, setIsCurrentUser] = useState(true)
 
-  const userId = props.userId
+  const currentUserId = props.currentUserId
+  const {username} = useParams()
 
   useEffect(() => {
     const token = cookie.load('accessToken');
     const options = {
       data: {
-        userId,
+        currentUserId,
       },
       headers: {
         Authorization: 'Bearer ' + token
       }
     }
-    axios.get('http://localhost:3005/users/getProfile', options).then(res => {
+    axios.get(`http://localhost:3005/users/getProfile/${username}`, options).then(res => {
       setUser(res.data)
-      if (user._id === userId) setIsCurrentUser(true);
+      if (user._id === currentUserId) setIsCurrentUser(true);
     }).catch(err => console.log(err))
   }, []);
 
   useEffect(() => {
-    if (user._id === userId) setIsCurrentUser(true);
+    if (user._id === currentUserId) setIsCurrentUser(true);
   }, [user])
   
   const handleFilters = (filters) => setFilters(filters);
 
   return (
     <div className={css(styles.container)}>
-      {/* <WalletLinker 
-        linkingCode={user !== null && user.identities && user.identities[0].linkingCode ? user.identities[0].linkingCode : ''}
-        linkingCodeQr={user !== null && user.identities && user.identities[0].linkingCodeQr ? user.identities[0].linkingCodeQr : ''}
-        /> */}
+      { createPanel && <CreatePanel hideCreatePanel={() => setCreatePanel(false)} tokens={user !== null && user && user.tokens ? user.tokens : []} />}
+      { linkPanel && <WalletLinker 
+        linkingCode={user !== null && user && user.linkingCode ? user.linkingCode : ''}
+        linkingCodeQr={user !== null && user && user.linkingCodeQr ? user.linkingCodeQr : ''}
+        hideLinkPanel={() => setLinkPanel(false)}
+        />}
       <div className={css(styles.coverPhoto)} style={{backgroundImage: `url(${user !== null && user.coverPhoto ? user.coverPhoto : defaultCover})`,}}></div>
       <div className={css(styles.profilePhoto)} style={{backgroundImage: `url(${user !== null && user.profilePhoto ? user.profilePhoto : defaultProfile})`,}}></div>
       <h2 style={{marginBottom: '0px'}}>{user !== null && user.username ? user.username : 'Attttouuuf'}</h2>
-      <p style={{marginBottom: '0px'}}>{ user !== null && user.wallet ? user.wallet : 'No wallet'}</p>
-      {(isCurrentUser && !user.wallet) && <button className={css(styles.linkWallet)}> <FontAwesomeIcon icon={faPlus} style={{marginRight: '2px'}}/> Link Wallet</button>}
+      { 
+        user !== null && user && user.wallet ?
+        ( <div style={{marginBottom: '0px', marginTop: '5px'}}> {shortenAddress(user.wallet.ethAddress)} <FontAwesomeIcon icon={faCopy} /> </div>) :
+        'No wallet'
+      }
+      {(user !== null && user && !user.wallet) && <button className={css(styles.linkWallet)} onClick={() => setLinkPanel(true)}> <FontAwesomeIcon icon={faPlus} style={{marginRight: '2px'}}/> Link Wallet</button>}
       {isCurrentUser ? (
         <ul className={css(styles.accountButtons)}>
           <li className={css(styles.liButton)} style={{borderTopLeftRadius: '7px', borderBottomLeftRadius: '7px'}}> <FontAwesomeIcon icon={faSlidersH} /> </li>
@@ -70,8 +86,10 @@ const Account = (props) => {
         </ul>
       )}
       <div className={css(styles.browse)}>
-        <ProfileNav handleFilters={handleFilters}/>
-        { filters.owned && <CardListH tokens={user !== null && user.identities && user.identities[0].tokens ? user.identities[0].tokens : []}/>}
+        <ProfileNav handleFilters={handleFilters} isCurrentUser={isCurrentUser} showCreatePanel={() => setCreatePanel(true)}/>
+        { filters.owned && <CardListH tokens={user !== null && user && user.tokens ? user.tokens : []} Card={TokenCard}/>}
+        { filters.forSale && <CardListH tokens={user !== null && user.listings  ? user.listings : []} Card={ListingCard}/>}
+        { filters.favorite && <CardListH tokens={user !== null && user.favorites  ? user.favorites : []} Card={TokenCard}/>}
         { filters.activity && <Activity />}
       </div>
     </div>
@@ -143,6 +161,9 @@ const styles = StyleSheet.create({
     ':hover': {
       transform: 'scale(1.05)'
     }
+  },
+  ethAddress: {
+    
   }
 })
 

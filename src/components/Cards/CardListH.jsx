@@ -1,13 +1,12 @@
 import React from 'react'
-import TokenCard from './TokenCard'
 import {StyleSheet, css} from 'aphrodite'
 
 
 const CardListH = (props) => {
-  const { tokens } = props
+  const { tokens, Card } = props
   return (
-    <div className={(tokens.length > 0) ? css(styles.horizontalList) : css(styles.emptyList)}>
-      {(tokens.length > 0) ? tokens.map(token => <TokenCard key={token.id} token={token} />) : (<h1 className={css(styles.noItems)}>No tokens to display</h1>)}
+    <div className={(tokens !== undefined && (tokens.length > 0)) ? css(styles.horizontalList) : css(styles.emptyList)}>
+      { tokens !== undefined && (tokens.length > 0) ? tokens.map(token => <Card key={token._id} token={token} />) : (<h1 className={css(styles.noItems)}>No tokens to display</h1>)}
     </div>
   )
 }
@@ -17,7 +16,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     margin: '50px 0px',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     borderTop: '1px solid rgba(0, 0, 0, .2)',
     minHeight: '300px'
   },

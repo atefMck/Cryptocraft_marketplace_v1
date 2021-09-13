@@ -1,19 +1,24 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios'
 import cookie from 'react-cookies'
-import Market from './routes/Market/Market';
-import Landing from './routes/Landing/Landing';
-import Contact from './routes/Contact/Contact';
-import HeaderNav from './components/Navigation/HeaderNav';
-import Footer from './components/Footer/Footer';
-import Account from './routes/Account/Account';
-import Auth from './components/Auth/Auth';
-import './App.css';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from 'react-router-dom';
+
+import Market from './routes/Market/Market';
+import Landing from './routes/Landing/Landing';
+import Contact from './routes/Contact/Contact';
+import Account from './routes/Account/Account';
+import Token from './routes/Token/Token';
+
+import HeaderNav from './components/Navigation/HeaderNav';
+import Footer from './components/Footer/Footer';
+import Auth from './components/Auth/Auth';
+
+import './App.css';
+
 
 const App = () => {
   const [register, setRegisterState] = useState(false)
@@ -59,8 +64,11 @@ const App = () => {
           <Route path='/contact'>
             <Contact />
           </Route>
-          <Route path='/profile'>
-            <Account userId={userId}/>
+          <Route path='/user/:username'>
+            <Account currentUserId={userId}/>
+          </Route>
+          <Route path='/token/:tokenId'>
+            <Token />
           </Route>
           <Route path='/'>
             <Landing />

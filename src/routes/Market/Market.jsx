@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import {StyleSheet, css} from 'aphrodite'
+
 import CardListH from '../../components/Cards/CardListH';
 import Filter from '../../components/Filter/Filter';
-import {StyleSheet, css} from 'aphrodite'
-import assets from '../../placeholders/placeholders'
+import ListingCard from '../../components/Cards/ListingCard'
 
 const Market = () => {
-  const [items, setItems] = useState([])
+  const [tokens, setTokens] = useState([])
+  const [sorting, setSorting] = useState('');
   const [filters, setFilters] = useState({
     category: '',
-    sort: '',
+    sorting: '',
     original: true,
     listing: false,
     buy: true,
@@ -17,30 +20,29 @@ const Market = () => {
   const handleFilters = (filters) => setFilters(filters)
   
   useEffect(() => {
-    const filteredItems = assets.filter(asset => {
-      let verify = true;
-      if (filters.category !== '') verify = verify && (asset.category === filters.category);
-      if (filters.original) verify = verify && (asset.listing.type === 'original');
-      if (filters.listing) verify = verify && (asset.listing.type === 'listing');
-      if (filters.buy) verify = verify && (asset.listing.sell === 'buyout');
-      if (filters.auction) verify = verify && (asset.listing.sell === 'auction');
-      return verify;
+    axios.get('http://localhost:3005/listings').then(res=> {
+      setTokens(res.data)
     })
-    if (filters.sort !== '') {
-      filteredItems.sort((firstItem, secondItem) => {
-        if (filters.sort === 'price') return (firstItem.price < secondItem.price ? 1 : -1)
-        if (filters.sort === 'views') return (firstItem.views < secondItem.views ? 1 : -1)
-        if (filters.sort === 'likes') return (firstItem.likes < secondItem.likes ? 1 : -1)
+    
+  }, []);
+
+  useEffect(() => {
+    let sortedItems = [...tokens]
+    if (sorting !== '') {
+      sortedItems = [...tokens.sort((firstItem, secondItem) => {
+        if (sorting === 'price') return (firstItem.price < secondItem.price ? 1 : -1)
+        if (sorting === 'views') return (firstItem.views < secondItem.views ? 1 : -1)
+        if (sorting === 'likes') return (firstItem.likes < secondItem.likes ? 1 : -1)
         return true
-      })
+      })]
+      setTokens(sortedItems);
     }
-    setItems(filteredItems);
-  }, [filters]);
+  }, [sorting]);
   
   return (
     <div className={css(styles.mainContainer)}>
-    <Filter handleFilters={handleFilters}/>
-    <CardListH items={items}/>
+    <Filter handleFilters={handleFilters} setSorting={setSorting}/>
+    <CardListH tokens={tokens} Card={ListingCard}/>
     </div>
     );
   }

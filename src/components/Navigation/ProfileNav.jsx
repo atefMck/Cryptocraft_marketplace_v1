@@ -1,5 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import { StyleSheet, css } from 'aphrodite'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 const ProfileNav = (props) => {
 
@@ -9,7 +11,7 @@ const ProfileNav = (props) => {
     favorite: false,
     activity: false
   })
-  const { handleFilters } = props
+  const { handleFilters, isCurrentUser, showCreatePanel } = props
 
   const handleTabs = event => {
     const newTabs = tabs
@@ -29,6 +31,7 @@ const ProfileNav = (props) => {
       <button name='owned' onClick={(e) => handleTabs(e)} className={tabs.owned ? css(styles.tab, styles.tabSelected) : css(styles.tab)}>Owned</button>
       <button name='favorite' onClick={(e) => handleTabs(e)} className={tabs.favorite ? css(styles.tab, styles.tabSelected) : css(styles.tab)}>Favorited</button>
       <button name='activity' onClick={(e) => handleTabs(e)} className={tabs.activity ? css(styles.tab, styles.tabSelected) : css(styles.tab)}>Activity</button>
+      { isCurrentUser && <button name='activity'className={css(styles.createButton)} onClick={showCreatePanel}> <FontAwesomeIcon icon={faPlus} style={{marginRight: '4px'}}/>Create</button>}
     </div>
   );
 }
@@ -38,6 +41,7 @@ const styles = StyleSheet.create({
     marginTop: '40px',
     marginBottom: '20px',
     padding: '0 2rem',
+    position: 'relative'
   },
   tab: {
     marginLeft: '50px',
@@ -62,6 +66,18 @@ const styles = StyleSheet.create({
     outlineBottom: '4px solid rgb(28,157,230)',
     ':after': {
       width: '100%'
+    }
+  },
+  createButton: {
+    position: 'absolute',
+    bottom: '16px',
+    right: '16px',
+    padding: '.7rem .9rem',
+    backgroundColor: 'rgba(109, 169, 29, .7)',
+    color: 'white',
+    transition: '.3s',
+    ':hover': {
+      transform: 'scale(1.05)'
     }
   }
 })

@@ -1,21 +1,20 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart, faEye } from '@fortawesome/free-solid-svg-icons'
 import { faEthereum } from '@fortawesome/free-brands-svg-icons'
 import { StyleSheet, css } from 'aphrodite'
 
-const CardH = ({name, price, seller, description, views, likes, image}) => {
+const CardH = (props) => {
+  const {description, price, seller, token} = props.token
+  const history = useHistory()
+  const redirectToken = () => {
+    history.push(`/token/${token._id}`)
+  }
   return (
-    <div className={css(styles.card)}>
-      <div className={css(styles.flexRow)} style={{justifyContent: 'flex-end'}}>
-        <FontAwesomeIcon icon={faEye} className={css(styles.textSmall)} />
-        <p className={css(styles.textSmall)} >&nbsp;{views}</p>&nbsp;&nbsp;
-        <FontAwesomeIcon icon={faHeart} className={css(styles.textSmall)} />
-        <p className={css(styles.textSmall)} >&nbsp;{likes}</p>
-      </div>
-      <img src={image} alt='Item Preview' className={css(styles.thumbnailMedium)}/>
+    <div className={css(styles.card)} onClick={redirectToken}>
+      <img src={token !== undefined ? token.icon : ''} alt='Item Preview' className={css(styles.thumbnailMedium)}/>
       <div className={css(styles.flexRow)} style={{justifyContent: 'space-between'}}>
-        <h4>{name}</h4>
+        <h4>{token !== undefined && token.name}</h4>
         <p className={css(styles.textSmall)} >Price</p>
       </div>
       <div className={css(styles.flexRow)} style={{justifyContent: 'flex-end', height: '10px !important'}}>

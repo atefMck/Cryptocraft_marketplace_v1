@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useHistory } from 'react-router-dom';
 import {StyleSheet, css} from 'aphrodite'
 import axios from 'axios'
 import cookie from 'react-cookies'
@@ -7,6 +8,7 @@ const Login = (props) => {
   const {displayLoader, setLogin, hideAuth, setError} = props
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const history = useHistory();
 
   const handleInput = (e) => {
     const statesMethods = {
@@ -30,6 +32,7 @@ const Login = (props) => {
       displayLoader(false);
       setLogin(true)
       hideAuth()
+      history.push('/')
     }).catch(err => {
       displayLoader(false)
       setError(err.response.data.message)

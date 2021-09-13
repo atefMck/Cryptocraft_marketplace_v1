@@ -25,14 +25,14 @@ const Filter = (props) => {
   const [listing, setListing] = useState(false)
   const [category, setCategory] = useState('')  
   const [sort, setSort] = useState('')  
-  const { handleFilters } = props;
+  const { handleFilters, setSorting } = props;
 
   const handleCategory = (option) => {
     setCategory(option.value);
   }
 
   const handleSort = (option) => {
-    setSort(option.value);
+    setSorting(option.value);
   }
 
   useEffect(() => {
@@ -95,7 +95,8 @@ const styles = StyleSheet.create({
     padding: '0 30px',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginBottom: '50px'
   },
   checkBox: {
     display: 'flex',

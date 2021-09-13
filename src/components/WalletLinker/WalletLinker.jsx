@@ -5,23 +5,42 @@ import {StyleSheet, css} from 'aphrodite'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import enjinLogo from '../../assets/img/enjinlogo.png'
+import tickImage from '../../assets/img/tick.png'
+import errorImage from '../../assets/img/error.png'
 
-const checkLink = () => {
-  const token = cookie.load('accessToken');
-  const options = {
-    headers: {
-      Authorization: 'Bearer ' + token
-    }
-  }
-  axios.get('http://localhost:3005/identity/checkLinking', options).then(res => {
-    
-  }).catch(err => console.log(err))
-}
 
 const WalletLinker = (props) => {
+  const {hideLinkPanel} = props
   const [step, setStep] = useState(0)
   const [error, setError] = useState('')
   const { linkingCode, linkingCodeQr } = props || ''
+
+  const syncData = () => {
+    const token = cookie.load('accessToken');
+    const options = {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    }
+    axios.get('http://localhost:3005/users/syncData', options).then(res => {
+      console.log(res.data)
+      const walletAddress = res.data.wallet.ethAddress
+      if (walletAddress !== '') {
+        setStep(2)
+      } else {
+        setStep(3)
+      }
+    }).catch(err => console.log(err))
+  }
+
+  const handleNext = () => {
+    if (step === 1) {
+      syncData()
+    } else {
+      setStep(step % 4 + 1)
+    }
+  }
+
   const steps = [
     (
       <div style={{display: 'flex', flexDirection: 'column'}}>
@@ -40,15 +59,31 @@ const WalletLinker = (props) => {
         <img src={linkingCodeQr} className={css(styles.qrCode)} alt="Qr linking code"/>
       </div>
     ),
+    (
+      <div style={{display: 'flex', flexDirection: 'column'}}>
+        <h2 style={{marginBottom: '50px'}}>Your wallet is successfully linked</h2>
+        <p>{error}</p>
+        <p>Welcome abroad adventurer. Now you can start earning, trading and creating tokens.</p>
+        <img src={tickImage} className={css(styles.qrCode)} alt="Success"/>
+      </div>
+    ),
+    (
+      <div style={{display: 'flex', flexDirection: 'column'}}>
+        <h2 style={{marginBottom: '50px'}}>Error linking your wallet</h2>
+        <p>{error}</p>
+        <p>Something wrong happened, please make sure you linked your wallet on the enjin app.</p>
+        <img src={errorImage} className={css(styles.qrCode)} alt="Error"/>
+      </div>
+    ),
   ]
 
 
   return (
     <div className={css(styles.container)} style={{backdropFilter: 'blur(8px)'}}>
       <div className={css(styles.linkContainer)}>
-        <FontAwesomeIcon className={css(styles.close)} icon={faTimes} onClick={() => setStep(0)}/>
+        <FontAwesomeIcon className={css(styles.close)} icon={faTimes} onClick={() => {setStep(0); hideLinkPanel()}}/>
           {steps[step]}
-        <button className={css(styles.nextButton)} onClick={() => setStep(step % 4 + 1)}>Next <FontAwesomeIcon className={css()} icon={faChevronRight} /></button>
+        <button className={css(styles.nextButton)} onClick={handleNext}>Next <FontAwesomeIcon icon={faChevronRight} /></button>
       </div>
     </div>
   );
