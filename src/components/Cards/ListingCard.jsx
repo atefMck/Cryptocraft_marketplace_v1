@@ -12,7 +12,7 @@ const CardH = (props) => {
   }
   return (
     <div className={css(styles.card)} onClick={redirectToken}>
-      <img src={token !== undefined ? token.icon : ''} alt='Item Preview' className={css(styles.thumbnailMedium)}/>
+      <img src={token !== undefined && token.metadata !== undefined ? token.metadata.image : token.icon} alt='Item Preview' className={css(styles.thumbnailMedium)}/>
       <div className={css(styles.flexRow)} style={{justifyContent: 'space-between'}}>
         <h4>{token !== undefined && token.name}</h4>
         <p className={css(styles.textSmall)} >Price</p>

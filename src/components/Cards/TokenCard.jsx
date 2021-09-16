@@ -7,7 +7,7 @@ import {shortenAddress} from '../../utils/StringUtils';
 
 
 const TokenCard = (props) => {
-  const { icon, name, creatorAddress, reserve, circulatingSupply, views, likes, _id } = props.token
+  const { icon, name, creatorAddress, reserve, circulatingSupply, views, likes, _id, metadata } = props.token
   const history = useHistory()
   const redirect = () => {
     history.push(`/token/${_id}`)
@@ -20,7 +20,7 @@ const TokenCard = (props) => {
         <FontAwesomeIcon icon={faHeart} className={css(styles.textSmall)} />
         <p className={css(styles.textSmall)} >&nbsp;{likes}</p>
       </div>
-      <img src={icon} alt='Item Preview' className={css(styles.thumbnailMedium)}/>
+      <img src={metadata !== undefined ? metadata.image : icon} alt='Item Preview' className={css(styles.thumbnailMedium)}/>
       <h3 style={{textAlign: 'center'}}>{name}</h3>
       <ul className={css(styles.tokenInfo)}>
         <li className={css(styles.listItem)}><p className={css(styles.descText)}>Creator:</p><p className={css(styles.descText)}>{shortenAddress(creatorAddress)}</p></li>
