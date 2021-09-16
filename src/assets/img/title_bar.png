@@ -1,0 +1,16 @@
+--2021-09-16 12:02:26--  https://github.com/atefMck/Cryptocraft_marketplace_v1/raw/landing/src/assets/img/title_bar.png
+Resolving github.com (github.com)... 140.82.121.4
+Connecting to github.com (github.com)|140.82.121.4|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://raw.githubusercontent.com/atefMck/Cryptocraft_marketplace_v1/landing/src/assets/img/title_bar.png [following]
+--2021-09-16 12:02:27--  https://raw.githubusercontent.com/atefMck/Cryptocraft_marketplace_v1/landing/src/assets/img/title_bar.png
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133, 185.199.109.133, 185.199.111.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 921 [image/png]
+Saving to: 'title_bar.png'
+
+     0K                                                       100% 65.1M=0s
+
+2021-09-16 12:02:27 (65.1 MB/s) - 'title_bar.png' saved [921/921]
+

@@ -1,35 +1,18 @@
 import React from 'react';
-import { StyleSheet, css } from 'aphrodite'
-
+import Header from '../../components/Landings/Header/Header';
+import Cards from '../../components/Landings/Body/Cards/Cards';
+import Article from '../../components/Landings/Body/Articles/Article';
 const Landing = () => {
   return (
-    <div>
-      <img src="https://i.ibb.co/2N5y9Q9/traminecraftblock.png" alt="bg"
-      className={css(styles.backgroundImage)}></img>
-      <div className={css(styles.mainContainer)}>
-        <h1>Hello bitch</h1>
-      </div>
+    <div >
+      <Header/>
+      <Article/>
+      <Article  flexStyle={true}/>
+      <Cards/>
     </div>
   );
 }
 
-const styles = StyleSheet.create({
-  backgroundImage: {
-    position: 'absolute',
-    top: '0',
-    left: '-10px',
-    width: '110vw',
-    filter: 'blur(5px)',
-    opacity: '.8',
-    zIndex: '-1',
-  },
-  mainContainer: {
-    color: 'white',
-    height: '88vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-})
+ 
 
 export default Landing;

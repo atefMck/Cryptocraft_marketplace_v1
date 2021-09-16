@@ -7,12 +7,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faEye } from '@fortawesome/free-solid-svg-icons'
 import { faEthereum } from '@fortawesome/free-brands-svg-icons'
 
-import {shortenAddress} from '../../utils/StringUtils';
+import Popup from '../../components/Popup/Popup'
+
 
 const Token = (props) => {
   const {tokenId} = useParams()
   const [token, setToken] = useState({});
   const [listings, setListings] = useState([]);
+  const [offerPopup, setOfferPopup] = useState(false);
+  const [buyPopup, setBuyPopup] = useState(false);
   const history = useHistory()
 
   const redirectUser = (username) => {
@@ -31,6 +34,8 @@ const Token = (props) => {
 
   return (
     <div className={css(styles.container)}>
+
+      {(offerPopup || buyPopup) && <Popup setBuyPopup={setBuyPopup} buyPopup={buyPopup} setOfferPopup={setOfferPopup} offerPopup={offerPopup} />}
 
       <div style={{width: '40%'}}>
         <div className={css(styles.tokenImageContainer, styles.flexContainer)}>
@@ -57,8 +62,8 @@ const Token = (props) => {
              ''
           }
           <div>
-            <button className={css(styles.button)}>Buy Now</button>
-            <button className={css(styles.button)} style={{marginLeft: '10px'}}>Make Offer</button>
+            <button className={css(styles.button)} onClick={() => setBuyPopup(true)}>Buy Now</button>
+            <button className={css(styles.button)} style={{marginLeft: '10px'}} onClick={() => setOfferPopup(true)}>Make Offer</button>
           </div>
         </div>
 
