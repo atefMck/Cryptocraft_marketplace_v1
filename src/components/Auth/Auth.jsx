@@ -11,7 +11,7 @@ import './Auth.css'
 
 
 const Auth = (props) => {
-  const {login, register} = props;
+  const {login, register, setUsername} = props;
   const { setRegister, setLogin } = props
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState({
@@ -42,7 +42,7 @@ const Auth = (props) => {
         <div action="" className={css(styles.form)}>
           {!loading && <FontAwesomeIcon className={css(styles.close)} icon={faTimes} onClick={hideAuth} />}
           { (!loading && register && !success.display) && <Register displayAuth={displayAuth} displayLoader={displayLoader} displaySuccess={displaySuccess} setError={setError}/>}
-          { (!loading && login && !success.display) && <Login displayAuth={displayAuth} displayLoader={displayLoader} setLogin={setLogin} hideAuth={hideAuth} setError={setError}/>}
+          { (!loading && login && !success.display) && <Login displayAuth={displayAuth} displayLoader={displayLoader} setLogin={setLogin} hideAuth={hideAuth} setError={setError} setUsernameApp={setUsername}/>}
           {(loading && !success.display) && <Loader />}
           {success.display && <RegistrationSuccess username={success.username} email={success.email} />}
           <p style={{color: 'rgb(224, 53, 75)', height: '30px'}}>{error}</p>

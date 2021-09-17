@@ -5,7 +5,7 @@ import axios from 'axios'
 import cookie from 'react-cookies'
 
 const Login = (props) => {
-  const {displayLoader, setLogin, hideAuth, setError} = props
+  const {displayLoader, setLogin, hideAuth, setError, setUsernameApp} = props
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const history = useHistory();
@@ -27,10 +27,10 @@ const Login = (props) => {
       password
     }
     axios.post('http://localhost:3005/users/login', body).then(res => {
-      console.log(res)
       cookie.save('accessToken', res.data.token)
       displayLoader(false);
       setLogin(true)
+      setUsernameApp(res.data.user.username)
       hideAuth()
       history.push('/')
     }).catch(err => {

@@ -29,6 +29,7 @@ const App = () => {
 
   const [isLogged, setIsLogged] = useState(false)
   const [userId, setUserId] = useState('')
+  const [username, setUsername] = useState('');
 
   const logOut = () => {
     cookie.remove('accessToken')
@@ -55,7 +56,7 @@ const App = () => {
 
   return (
     <Router>
-      <HeaderNav setRegister={setRegister} setLogin={setLogin} isLogged={isLogged} logOut={logOut} />
+      <HeaderNav setRegister={setRegister} setLogin={setLogin} isLogged={isLogged} logOut={logOut} username={username}/>
       <div className='App'>
         
         <Switch>
@@ -79,7 +80,7 @@ const App = () => {
           </Route>
         </Switch>
         <Footer />
-        { (login || register) && <Auth login={login} register={register} setRegister={setRegister} setLogin={setLogin}/> }
+        { (login || register) && <Auth login={login} register={register} setRegister={setRegister} setLogin={setLogin} setUsername={setUsername}/> }
       </div>
     </Router>
   );
