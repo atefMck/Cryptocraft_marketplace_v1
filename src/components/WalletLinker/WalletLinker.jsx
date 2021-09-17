@@ -22,7 +22,7 @@ const WalletLinker = (props) => {
         Authorization: 'Bearer ' + token
       }
     }
-    axios.get('http://localhost:3005/users/syncData', options).then(res => {
+    axios.get('http://localhost:3005/users/syncUser', options).then(res => {
       console.log(res.data)
       const walletAddress = res.data.wallet.ethAddress
       if (walletAddress !== '') {

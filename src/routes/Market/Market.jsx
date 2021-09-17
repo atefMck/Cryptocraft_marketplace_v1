@@ -41,7 +41,7 @@ const Market = () => {
   
   return (
     <div className={css(styles.mainContainer)}>
-    <Filter handleFilters={handleFilters} setSorting={setSorting}/>
+    <Filter handleFilters={handleFilters} setSorting={setSorting} listingCount={tokens.length}/>
     <CardListH tokens={tokens} Card={ListingCard}/>
     </div>
     );

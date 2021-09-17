@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import MinecraftLogo from '../../assets/img/logo.png';
+import logoSvg from '../../assets/img/logo.svg'
 import SearchBar from '../Misc/SearchBar';
-import {StyleSheet, css} from 'aphrodite'
+import {StyleSheet, css} from 'aphrodite';
 
 
 const HeaderNav = (props) => {
@@ -12,7 +12,8 @@ const HeaderNav = (props) => {
 
   return (
     <div className={css(styles.headerNav)}>
-      <img src={MinecraftLogo} className={css(styles.logoStyle)} alt='' />
+      {/* <img src={MinecraftLogo} className={css(styles.logoStyle)} alt='' /> */}
+      <img src={logoSvg} className={css(styles.logoStyle)} onClick={() => history.push('/')}/>
       <SearchBar />
       <ul className={css(styles.navLink)}>
         <li onClick={() => history.push('/')}>Home</li>
@@ -33,8 +34,9 @@ const HeaderNav = (props) => {
 const styles = StyleSheet.create({
   logoStyle: {
     marginLeft: '10px',
-    width: '135px',
-    height: '40px',
+    width: '150px',
+    height: '50px',
+    cursor: 'pointer'
   },
   headerNav: {
     display: 'flex',

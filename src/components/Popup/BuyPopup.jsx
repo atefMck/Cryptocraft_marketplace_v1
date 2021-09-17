@@ -5,49 +5,50 @@ import { FontAwesomeIcon  } from '@fortawesome/react-fontawesome'
 import profile from '../../assets/img/profile.jpg'
 
 const BuyPopup = (props) => {
-    return (
-        <div className={css(styles.popcontainer)}>
-            <div className={css(styles.div1)}>
-            <h4 className={css(styles.text)}>Complete checkout</h4>
-          </div>
-          <div className={css(styles.div2)}>
-            <h2 >Item</h2>
-            <h2>Subtotal</h2>
-          </div>
-          <div className={css(styles.div3)}>
-            <div className={css(styles.div3left1)}>
-              <img src={profile} className={css(styles.img)} alt="token"/>
-              <div className={css(styles.div3left)}>
-                <p className={css(styles.p)}>Dailydust Collection</p>
-                <p className={css(styles.p)}>Specturm of A Ramenfication Theory</p>
-                <p className={css(styles.p)}>Royalities: 10% @</p>
-              </div>
-            </div>
-          <div className={css(styles.div3left2)}>
-              <p className={css(styles.ppp)}> <FontAwesomeIcon icon={faEthereum}/>1.5</p>
-              <p className={css(styles.pp)}>($5,028.77)</p>
+  const {token, listing} = props
+
+  return (
+      <div className={css(styles.popcontainer)}>
+          <div className={css(styles.div1)}>
+          <h4 className={css(styles.text)}>Complete checkout</h4>
+        </div>
+        <div className={css(styles.div2)}>
+          <h2 >Item</h2>
+          <h2>Subtotal</h2>
+        </div>
+        <div className={css(styles.div3)}>
+          <div className={css(styles.div3left1)}>
+            <img src={token.metadata !== undefined ? token.metadata.image : token.icon} className={css(styles.img)} alt="token"/>
+            <div className={css(styles.div3left)}>
+              <p className={css(styles.p)}>{token.name}</p>
+              <p className={css(styles.p)}>Royalities: 10% @</p>
             </div>
           </div>
-          <div className={css(styles.div3)}>
-            <p className={css(styles.pp)}>Total</p>
-            <div className={css(styles.div3left2)}>
-              <p className={css(styles.ppp)}> <FontAwesomeIcon icon={faEthereum}/>1.5</p>
-              <p className={css(styles.pp)}>($5,028.77)</p>
-            </div>
-          </div>
-          <div className={css(styles.div5)}>
-          <label class='container'>
-            <span className={css(styles.terms)}>By checking this box, I agree to Crypto's</span> <span className={css(styles.terms2)}>Terms of Service</span>
-            <input type='checkbox' />
-            <span class='checkmark'></span>
-          </label>
-          </div>
-          <div className={css(styles.div6)}>
-            <button className={css(styles.button1)} disabled>Checkout</button>
-            <button className={css(styles.button2)}>Add Funds</button>
+        <div className={css(styles.div3left2)}>
+            <p className={css(styles.ppp)}> <FontAwesomeIcon icon={faEthereum}/>{listing.price}</p>
+            <p className={css(styles.pp)}>(${listing.price * 3978})</p>
           </div>
         </div>
-    )
+        <div className={css(styles.div3)}>
+          <p className={css(styles.pp)}>Total</p>
+          <div className={css(styles.div3left2)}>
+            <p className={css(styles.ppp)}> <FontAwesomeIcon icon={faEthereum}/>{listing.price}</p>
+            <p className={css(styles.pp)}>(${listing.price * 3978})</p>
+          </div>
+        </div>
+        <div className={css(styles.div5)}>
+        <label className='container'>
+          <span className={css(styles.terms)}>By checking this box, I agree to Crypto's</span> <span className={css(styles.terms2)}>Terms of Service</span>
+          <input type='checkbox' />
+          <span className='checkmark'></span>
+        </label>
+        </div>
+        <div className={css(styles.div6)}>
+          <button className={css(styles.button1)} disabled>Checkout</button>
+          <button className={css(styles.button2)}>Add Funds</button>
+        </div>
+      </div>
+  )
 }
 
 const styles = StyleSheet.create({

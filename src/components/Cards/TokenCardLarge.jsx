@@ -6,8 +6,8 @@ import { faHeart, faEye } from '@fortawesome/free-solid-svg-icons'
 import {shortenAddress} from '../../utils/StringUtils';
 
 
-const TokenCard = (props) => {
-  const { icon, name, creatorAddress, reserve, circulatingSupply, views, likes, _id, metadata } = props.token
+const TokenCardLarge = (props) => {
+  const { description, icon, name, creatorAddress, reserve, circulatingSupply, views, likes, _id, metadata } = props.token
   const history = useHistory()
   const redirect = () => {
     history.push(`/token/${_id}`)
@@ -22,8 +22,12 @@ const TokenCard = (props) => {
       </div>
       <img src={metadata !== undefined ? metadata.image : icon} alt='Item Preview' className={css(styles.thumbnailMedium)}/>
       <h3 style={{textAlign: 'center'}}>{name}</h3>
+      <div className={css(styles.legendary)}>
+        <p style={{padding: '.5rem 1rem'}}>Legendary</p>
+      </div>
+      <p style={{fontSize: '.8rem'}}>{description}</p>
       <ul className={css(styles.tokenInfo)}>
-        <li className={css(styles.listItem)}><p className={css(styles.descText)}>Creator:</p><p className={css(styles.descText)}>{creatorAddress !== undefined ? shortenAddress(creatorAddress) : ''}</p></li>
+        <li className={css(styles.listItem)}><p className={css(styles.descText)}>Creator:</p><p className={css(styles.descText)}>{shortenAddress(creatorAddress)}</p></li>
         <li className={css(styles.listItem)}><p className={css(styles.descText)}>Reserve:</p><p className={css(styles.descText)}>{reserve}</p></li>
         <li className={css(styles.listItem)}><p className={css(styles.descText)}>Total Supply:</p><p className={css(styles.descText)}>{circulatingSupply}</p></li>
       </ul>
@@ -33,7 +37,7 @@ const TokenCard = (props) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: '270px',
+    width: '370px',
     margin: '30px',
     padding: '.5rem .8rem',
     borderRadius: '15px',
@@ -74,6 +78,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '20px',
   },
+  legendary: {
+    fontSize: '.8rem',
+    backgroundColor: 'rgb(255,128,0)',
+    width: 'fit-content',
+    margin: 'auto',
+    color: 'white',
+  }
 })
 
-export default TokenCard;
+export default TokenCardLarge;

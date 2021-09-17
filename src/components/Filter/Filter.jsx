@@ -25,7 +25,7 @@ const Filter = (props) => {
   const [listing, setListing] = useState(false)
   const [category, setCategory] = useState('')  
   const [sort, setSort] = useState('')  
-  const { handleFilters, setSorting } = props;
+  const { handleFilters, setSorting, listingCount } = props;
 
   const handleCategory = (option) => {
     setCategory(option.value);
@@ -59,7 +59,7 @@ const Filter = (props) => {
           <Select options={sortOptions} styles={customStyles} onChange={handleSort} name='sort' setValue={sort}/>
         </div>
       </div>
-      <h3>58,378 listings</h3>
+      <h3>{listingCount} listing {listingCount > 1 ? 's': ''}</h3>
       <div>
         <h5>Status</h5>
         <button className={!original ? css(styles.checkButton) : css(styles.checkButton, styles.checkedButton)} 

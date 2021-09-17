@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     // border: '.5px solid rgba(0, 0, 0, .1)',
     padding: '.5rem .8rem',
     borderRadius: '15px',
-    boxShadow: '0px 0px 20px rgba(0, 0, 0, .1)',
+    boxShadow: '0px 0px 10px rgba(0, 0, 0, .3)',
     transition: '.3s',
     ':hover': {
       cursor: 'pointer',

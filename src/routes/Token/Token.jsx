@@ -35,7 +35,7 @@ const Token = (props) => {
   return (
     <div className={css(styles.container)}>
 
-      {(offerPopup || buyPopup) && <Popup setBuyPopup={setBuyPopup} buyPopup={buyPopup} setOfferPopup={setOfferPopup} offerPopup={offerPopup} />}
+      {(offerPopup || buyPopup) && <Popup setBuyPopup={setBuyPopup} buyPopup={buyPopup} setOfferPopup={setOfferPopup} offerPopup={offerPopup} token={token} listing={listings[0]}/>}
 
       <div style={{width: '40%'}}>
         <div className={css(styles.tokenImageContainer, styles.flexContainer)}>
@@ -45,7 +45,7 @@ const Token = (props) => {
             <FontAwesomeIcon icon={faHeart} className={css(styles.textSmall)} />
             <p className={css(styles.textSmall)} >&nbsp;{token.likes}</p>
           </div>
-          <img src={token.icon} alt="" className={css(styles.tokenImage)}/>
+          <img src={token.metadata !== undefined ? token.metadata.image : token.icon} alt="" className={css(styles.tokenImage)}/>
         </div>
       </div>
       

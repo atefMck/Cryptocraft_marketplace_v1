@@ -59,21 +59,21 @@ const Account = (props) => {
 
   return (
     <div className={css(styles.container)}>
-      { createPanel && <CreatePanel hideCreatePanel={() => setCreatePanel(false)} tokens={user !== null && user && user.tokens ? user.tokens : []} />}
+      { createPanel && <CreatePanel hideCreatePanel={() => setCreatePanel(false)} tokens={user !== null && user && user.identity.tokens ? user.identity.tokens : []} />}
       { linkPanel && <WalletLinker 
-        linkingCode={user !== null && user && user.linkingCode ? user.linkingCode : ''}
-        linkingCodeQr={user !== null && user && user.linkingCodeQr ? user.linkingCodeQr : ''}
+        linkingCode={user !== null && user && user.identity.linkingCode ? user.identity.linkingCode : ''}
+        linkingCodeQr={user !== null && user && user.identity.linkingCodeQr ? user.identity.linkingCodeQr : ''}
         hideLinkPanel={() => setLinkPanel(false)}
         />}
       <div className={css(styles.coverPhoto)} style={{backgroundImage: `url(${user !== null && user.coverPhoto ? user.coverPhoto : defaultCover})`,}}></div>
       <div className={css(styles.profilePhoto)} style={{backgroundImage: `url(${user !== null && user.profilePhoto ? user.profilePhoto : defaultProfile})`,}}></div>
       <h2 style={{marginBottom: '0px'}}>{user !== null && user.username ? user.username : 'Attttouuuf'}</h2>
       { 
-        user !== null && user && user.wallet ?
-        ( <div style={{marginBottom: '0px', marginTop: '5px'}}> {shortenAddress(user.wallet.ethAddress)} <FontAwesomeIcon icon={faCopy} /> </div>) :
+        user !== null && user.identity && user.identity.wallet && user.identity.wallet.ethAddress ?
+        ( <div style={{marginBottom: '0px', marginTop: '5px'}}> {shortenAddress(user.identity.wallet.ethAddress)} <FontAwesomeIcon icon={faCopy} /> </div>) :
         'No wallet'
       }
-      {(user !== null && user && !user.wallet) && <button className={css(styles.linkWallet)} onClick={() => setLinkPanel(true)}> <FontAwesomeIcon icon={faPlus} style={{marginRight: '2px'}}/> Link Wallet</button>}
+      {(user !== null && user.identity && !user.identity.wallet) && <button className={css(styles.linkWallet)} onClick={() => setLinkPanel(true)}> <FontAwesomeIcon icon={faPlus} style={{marginRight: '2px'}}/> Link Wallet</button>}
       {isCurrentUser ? (
         <ul className={css(styles.accountButtons)}>
           <li className={css(styles.liButton)} style={{borderTopLeftRadius: '7px', borderBottomLeftRadius: '7px'}}> <FontAwesomeIcon icon={faSlidersH} /> </li>
@@ -87,7 +87,7 @@ const Account = (props) => {
       )}
       <div className={css(styles.browse)}>
         <ProfileNav handleFilters={handleFilters} isCurrentUser={isCurrentUser} showCreatePanel={() => setCreatePanel(true)}/>
-        { filters.owned && <CardListH tokens={user !== null && user && user.tokens ? user.tokens : []} Card={TokenCard}/>}
+        { filters.owned && <CardListH tokens={user !== null && user.identity && user.identity.tokens ? user.identity.tokens : []} Card={TokenCard}/>}
         { filters.forSale && <CardListH tokens={user !== null && user.listings  ? user.listings : []} Card={ListingCard}/>}
         { filters.favorite && <CardListH tokens={user !== null && user.favorites  ? user.favorites : []} Card={TokenCard}/>}
         { filters.activity && <Activity />}

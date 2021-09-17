@@ -12,6 +12,7 @@ import Landing from './routes/Landing/Landing';
 import Contact from './routes/Contact/Contact';
 import Account from './routes/Account/Account';
 import Token from './routes/Token/Token';
+import Stats from './routes/Stats/Stats';
 
 import HeaderNav from './components/Navigation/HeaderNav';
 import Footer from './components/Footer/Footer';
@@ -63,6 +64,9 @@ const App = () => {
           </Route>
           <Route path='/contact'>
             <Contact />
+          </Route>
+          <Route path='/stats'>
+            <Stats />
           </Route>
           <Route path='/user/:username'>
             <Account currentUserId={userId}/>

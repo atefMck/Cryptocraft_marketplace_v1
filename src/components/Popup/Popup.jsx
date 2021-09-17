@@ -6,7 +6,7 @@ import BuyPopup from './BuyPopup'
 import React from 'react';
 import './pop.css'
 const Popup = (props) => {
-  const {setOfferPopup, setBuyPopup, offerPopup, buyPopup} = props
+  const {setOfferPopup, setBuyPopup, offerPopup, buyPopup, token , listing} = props
 
  
 
@@ -17,7 +17,7 @@ const Popup = (props) => {
             <FontAwesomeIcon icon={faTimes} className={css(styles.fa)}  onClick={()=>{setBuyPopup(false); setOfferPopup(false)}}/> 
           </div>
           { offerPopup && <OfferPopup /> }
-          { buyPopup && <BuyPopup /> }
+          { buyPopup && <BuyPopup token={token} listing={listing}/> }
         </div>  
     </div>
   );

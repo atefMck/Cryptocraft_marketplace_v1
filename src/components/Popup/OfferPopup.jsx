@@ -23,7 +23,7 @@ const offerPopup = (props) => {
                             
                         </select>
                         <input type='text'  name='Amount' placeholder='Amount' className={css(styles.priceinput)}/>
-                        <label className={css(styles.pricelabel)} for=''><span className={css(styles.labelspan)}>$0.00</span></label>
+                        <label className={css(styles.pricelabel)}><span className={css(styles.labelspan)}>$0.00</span></label>
                         
                     </div>
                 </div>
@@ -54,10 +54,10 @@ const offerPopup = (props) => {
             </form>
           
           <div className={css(styles.div5)}>
-          <label class='container'>
+          <label className='container'>
             <span className={css(styles.terms)}>By checking this box, I agree to Crypto's</span> <span className={css(styles.terms2)}>Terms of Service</span>
             <input type='checkbox' />
-            <span class='checkmark'></span>
+            <span className='checkmark'></span>
           </label>
           </div>
           <div className={css(styles.div6)}>
