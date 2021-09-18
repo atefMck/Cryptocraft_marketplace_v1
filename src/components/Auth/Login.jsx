@@ -5,7 +5,7 @@ import axios from 'axios'
 import cookie from 'react-cookies'
 
 const Login = (props) => {
-  const {displayLoader, setLogin, hideAuth, setError, setUsernameApp} = props
+  const {displayLoader, setLogin, hideAuth, setError} = props
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const history = useHistory();
@@ -30,7 +30,6 @@ const Login = (props) => {
       cookie.save('accessToken', res.data.token)
       displayLoader(false);
       setLogin(true)
-      setUsernameApp(res.data.user.username)
       hideAuth()
       history.push('/')
     }).catch(err => {

@@ -24,13 +24,14 @@ const Account = (props) => {
   const [user, setUser] = useState({})
   const [linkPanel, setLinkPanel] = useState(false)
   const [createPanel, setCreatePanel] = useState(false)
+  const [ownedTokens, setOwnedTokens] = useState([]);
   const [filters, setFilters] = useState({
     forSale: false,
     owned: false,
     favorite: false,
     activity: false
   })
-  const [isCurrentUser, setIsCurrentUser] = useState(true)
+  const [isCurrentUser, setIsCurrentUser] = useState(false)
 
   const currentUserId = props.currentUserId
   const {username} = useParams()
@@ -47,6 +48,12 @@ const Account = (props) => {
     }
     axios.get(`http://localhost:3005/users/getProfile/${username}`, options).then(res => {
       setUser(res.data)
+      setOwnedTokens(res.data.identity.tokens.filter(token => {
+        for (let balance of res.data.identity.wallet.balances) {
+          if ((balance.tokenId === token.id) && (balance.value > 0)) return true;
+        }
+        return false
+      }))
       if (user._id === currentUserId) setIsCurrentUser(true);
     }).catch(err => console.log(err))
   }, []);
@@ -59,7 +66,7 @@ const Account = (props) => {
 
   return (
     <div className={css(styles.container)}>
-      { createPanel && <CreatePanel hideCreatePanel={() => setCreatePanel(false)} tokens={user !== null && user && user.identity.tokens ? user.identity.tokens : []} balances={user !== null && user && user.identity.wallet && user.identity.wallet.balances ? user.identity.wallet.balances : []}/>}
+      { createPanel && <CreatePanel hideCreatePanel={() => setCreatePanel(false)} tokens={ownedTokens} balances={user !== null && user && user.identity.wallet && user.identity.wallet.balances ? user.identity.wallet.balances : []}/>}
       { linkPanel && <WalletLinker 
         linkingCode={user !== null && user && user.identity.linkingCode ? user.identity.linkingCode : ''}
         linkingCodeQr={user !== null && user && user.identity.linkingCodeQr ? user.identity.linkingCodeQr : ''}
@@ -86,8 +93,8 @@ const Account = (props) => {
         </ul>
       )}
       <div className={css(styles.browse)}>
-        <ProfileNav handleFilters={handleFilters} isCurrentUser={isCurrentUser} showCreatePanel={() => setCreatePanel(true)}/>
-        { filters.owned && <CardListH tokens={user !== null && user.identity && user.identity.tokens ? user.identity.tokens : []} Card={TokenCard}/>}
+        <ProfileNav handleFilters={handleFilters} isCurrentUser={isCurrentUser} showCreatePanel={() => setCreatePanel(true)} canCreate={ownedTokens.length > 0}/>
+        { filters.owned && <CardListH tokens={ownedTokens} Card={TokenCard}/>}
         { filters.forSale && <CardListH tokens={user !== null && user.listings  ? user.listings : []} Card={ListingCard}/>}
         { filters.favorite && <CardListH tokens={user !== null && user.favorites  ? user.favorites : []} Card={TokenCard}/>}
         { filters.activity && <Activity />}

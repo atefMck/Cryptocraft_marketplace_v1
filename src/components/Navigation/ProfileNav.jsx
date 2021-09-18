@@ -1,17 +1,25 @@
 import React, {useState,useEffect} from 'react';
 import { StyleSheet, css } from 'aphrodite'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faExclamation } from '@fortawesome/free-solid-svg-icons'
 
 const ProfileNav = (props) => {
 
+  const [cantCreate, setCantCreate] = useState(false);
   const [tabs, setTabs] = useState({
     forSale: true,
     owned: false,
     favorite: false,
     activity: false
   })
-  const { handleFilters, isCurrentUser, showCreatePanel } = props
+  const { handleFilters, isCurrentUser, showCreatePanel, canCreate } = props
+
+  const handleCreate = () => {
+    if (canCreate) showCreatePanel();
+    else {
+      setCantCreate(true)
+    }
+  }
 
   const handleTabs = event => {
     const newTabs = tabs
@@ -31,7 +39,12 @@ const ProfileNav = (props) => {
       <button name='owned' onClick={(e) => handleTabs(e)} className={tabs.owned ? css(styles.tab, styles.tabSelected) : css(styles.tab)}>Owned</button>
       <button name='favorite' onClick={(e) => handleTabs(e)} className={tabs.favorite ? css(styles.tab, styles.tabSelected) : css(styles.tab)}>Favorited</button>
       <button name='activity' onClick={(e) => handleTabs(e)} className={tabs.activity ? css(styles.tab, styles.tabSelected) : css(styles.tab)}>Activity</button>
-      { isCurrentUser && <button name='activity'className={css(styles.createButton)} onClick={showCreatePanel}> <FontAwesomeIcon icon={faPlus} style={{marginRight: '4px'}}/>Create</button>}
+      { isCurrentUser && 
+        <button name='activity'className={cantCreate ? css(styles.createButton, styles.errorButton) : css(styles.createButton)} onClick={handleCreate}>
+          {cantCreate ? <FontAwesomeIcon icon={faExclamation} style={{marginRight: '4px'}}/> : <FontAwesomeIcon icon={faPlus} style={{marginRight: '4px'}}/>}
+          {cantCreate ? 'No tokens' : 'Create'}
+        </button>
+      }
     </div>
   );
 }
@@ -79,6 +92,9 @@ const styles = StyleSheet.create({
     ':hover': {
       transform: 'scale(1.05)'
     }
+  },
+  errorButton: {
+    backgroundColor: 'rgb(233,71,71)',
   }
 })
 

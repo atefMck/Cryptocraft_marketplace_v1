@@ -2,20 +2,26 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import cookie from 'react-cookies'
 import {StyleSheet, css} from 'aphrodite'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+
 import enjinLogo from '../../assets/img/enjinlogo.png'
 import tickImage from '../../assets/img/tick.png'
 import errorImage from '../../assets/img/error.png'
+
+import Loader from '../Loader/Loader.jsx'
 
 
 const WalletLinker = (props) => {
   const {hideLinkPanel} = props
   const [step, setStep] = useState(0)
   const [error, setError] = useState('')
+  const [buttonText, setButtonText] = useState('Next');
   const { linkingCode, linkingCodeQr } = props || ''
 
   const syncData = () => {
+    setStep(4)
     const token = cookie.load('accessToken');
     const options = {
       headers: {
@@ -36,8 +42,12 @@ const WalletLinker = (props) => {
   const handleNext = () => {
     if (step === 1) {
       syncData()
-    } else {
-      setStep(step % 4 + 1)
+    } else if (step === 3) {
+      hideLinkPanel()
+      setButtonText('Finish');
+    }
+    else {
+      setStep((step + 1) % 5)
     }
   }
 
@@ -75,6 +85,11 @@ const WalletLinker = (props) => {
         <img src={errorImage} className={css(styles.qrCode)} alt="Error"/>
       </div>
     ),
+    (
+      <div style={{display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
+        <Loader />
+      </div>
+    )
   ]
 
 
@@ -83,7 +98,7 @@ const WalletLinker = (props) => {
       <div className={css(styles.linkContainer)}>
         <FontAwesomeIcon className={css(styles.close)} icon={faTimes} onClick={() => {setStep(0); hideLinkPanel()}}/>
           {steps[step]}
-        <button className={css(styles.nextButton)} onClick={handleNext}>Next <FontAwesomeIcon icon={faChevronRight} /></button>
+        <button className={css(styles.nextButton)} onClick={handleNext}>{buttonText}<FontAwesomeIcon icon={faChevronRight} /></button>
       </div>
     </div>
   );

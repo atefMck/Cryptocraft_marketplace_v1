@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import cookie from 'react-cookies'
 
@@ -15,6 +16,8 @@ const CreatePanel = (props) => {
   const [tokenIndexSelect, setTokenIndexSelect] = useState(false);
   const [tokenIndex, setTokenIndex] = useState('');
   const [selectIndexes, setSelectIndexes] = useState([])
+  const history = useHistory();
+
   const selectToken = []
   tokens.forEach(token => {
     const option = {
@@ -52,8 +55,8 @@ const CreatePanel = (props) => {
       }
     }
     axios.post('http://localhost:3005/listings/create', data, options).then(res => {
-      console.log(res)
-      hideCreatePanel()
+      const tokenId = res.data.tokenId
+      history.push(`/token/${tokenId}`)
     }).catch(err => {
       console.log(err)
       hideCreatePanel()

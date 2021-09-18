@@ -31,8 +31,8 @@ const App = () => {
   const [userId, setUserId] = useState('')
   const [username, setUsername] = useState('');
 
-  const logOut = async () => {
-    await cookie.remove('accessToken')
+  const logOut = () => {
+    cookie.remove('accessToken')
     setUserId('')
     setIsLogged(false); 
   }
@@ -49,6 +49,7 @@ const App = () => {
       }).then(res => {
         setIsLogged(true);
         setUserId(res.data.userId)
+        setUsername(res.data.username)
       }).catch(err => console.log(err))
     }
   }, [isLogged, register, login]);
@@ -80,7 +81,7 @@ const App = () => {
           </Route>
         </Switch>
         <Footer />
-        { (login || register) && <Auth login={login} register={register} setRegister={setRegister} setLogin={setLogin} setUsername={setUsername}/> }
+        { (login || register) && <Auth login={login} register={register} setRegister={setRegister} setLogin={setLogin}/> }
       </div>
     </Router>
   );
