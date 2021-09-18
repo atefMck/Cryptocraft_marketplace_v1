@@ -27,10 +27,10 @@ const TokensShowcase = () => {
   return (
     <div className={css(styles.container)}>
       <div className={css(styles.flexRow)}>
-        {tokensLarge.map(token => (<TokenCardLarge key={token._id} token={token} dark={true}></TokenCardLarge>))}
+        {tokensLarge.map((token, index) => (<TokenCardLarge key={index} token={token} dark={true}></TokenCardLarge>))}
       </div>
       <div className={css(styles.flexRow)}>
-        {tokens.map(token => (<TokenCard key={token._id} token={token} dark={true}></TokenCard>))}
+        {tokens.map((token, index) => (<TokenCard key={index} token={token} dark={true}></TokenCard>))}
       </div>
     </div>
   );

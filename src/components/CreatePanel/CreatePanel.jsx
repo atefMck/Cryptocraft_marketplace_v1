@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import cookie from 'react-cookies'
 
@@ -8,31 +8,43 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import Select from 'react-select'
 
 const CreatePanel = (props) => {
-  const {hideCreatePanel, tokens} = props
+  const {hideCreatePanel, tokens, balances} = props
   const [tokenId, setToken] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
+  const [tokenIndexSelect, setTokenIndexSelect] = useState(false);
+  const [tokenIndex, setTokenIndex] = useState('');
+  const [selectIndexes, setSelectIndexes] = useState([])
   const selectToken = []
   tokens.forEach(token => {
     const option = {
-      value: token._id,
+      value: token.id,
       label: token.name
     }
-    selectToken.push(option)
+    if (selectToken.filter(tokenOption => tokenOption.value === option.value).length === 0) {
+      selectToken.push(option)      
+    }
   })
 
-  const handleToken = (option) => setToken(option.value);
+  const handleToken = (option) => {
+    setTokenIndexSelect(true)
+    setTokenIndex('')
+    setToken(option.value)
+  };
+  const handleTokenIndex = (option) => setTokenIndex(option.value)
   const handleDescription = (e) => setDescription(e.target.value);
   const handlePrice = (e) => setPrice(e.target.value);
 
   const handleSubmit = (e) => {
     e.preventDefault()
     const token = cookie.load('accessToken');
+    const dbTokenId = tokens.filter(token => token.id === tokenId)[0]._id
     const data = {
       description,
       price,
       quantity: 1,
-      tokenId
+      tokenId: dbTokenId,
+      tokenIndex
     }
     const options = {
       headers: {
@@ -48,6 +60,12 @@ const CreatePanel = (props) => {
     })
   }
 
+  useEffect(() => {
+    const options = []
+    balances.filter(balance => (balance.tokenId === tokenId) && (balance.value > 0)).forEach(balance => options.push({value: balance.tokenIndex, label: balance.tokenIndex.replaceAll('0', '')}))
+    setSelectIndexes([...options.sort()])
+  }, [tokenId]);
+
 
   return (
     <div className={css(styles.container)} style={{backdropFilter: 'blur(8px)'}}>
@@ -59,6 +77,8 @@ const CreatePanel = (props) => {
           <div className={css(styles.formRow)}>
             <label className={css(styles.label)}>Select Token:</label>
             <Select options={selectToken} styles={customStyles} name='token' onChange={handleToken} setValue={tokenId}/>
+            { tokenIndexSelect && <label className={css(styles.label)} style={{marginLeft: '60px'}}>Select Index:</label>}
+            { tokenIndexSelect && <Select options={selectIndexes} styles={customStyles} name='token' onChange={handleTokenIndex} setValue={tokenIndex}/>}
           </div>
           <div className={css(styles.formRow)}>                                            
             <label className={css(styles.label)}>Token description:</label>

@@ -4,9 +4,17 @@ import {StyleSheet, css} from 'aphrodite'
 
 const CardListH = (props) => {
   const { tokens, Card } = props
+  const uniqueTokens = tokens.reduce((acc, current) => {
+    const x = acc.find(item => item._id === current._id);
+    if (!x) {
+      return acc.concat([current]);
+    } else {
+      return acc;
+    }
+  }, []);
   return (
     <div className={(tokens !== undefined && (tokens.length > 0)) ? css(styles.horizontalList) : css(styles.emptyList)}>
-      { tokens !== undefined && (tokens.length > 0) ? tokens.map(token => <Card key={token._id} token={token} />) : (<h1 className={css(styles.noItems)}>No tokens to display</h1>)}
+      { uniqueTokens !== undefined && (uniqueTokens.length > 0) ? uniqueTokens.map((token, index) => <Card key={`${token._id}_${index}`} token={token} />) : (<h1 className={css(styles.noItems)}>No tokens to display</h1>)}
     </div>
   )
 }

@@ -59,7 +59,7 @@ const Filter = (props) => {
           <Select options={sortOptions} styles={customStyles} onChange={handleSort} name='sort' setValue={sort}/>
         </div>
       </div>
-      <h3>{listingCount} listing {listingCount > 1 ? 's': ''}</h3>
+      <h3>{listingCount} Listing{listingCount > 1 ? 's': ''}</h3>
       <div>
         <h5>Status</h5>
         <button className={!original ? css(styles.checkButton) : css(styles.checkButton, styles.checkedButton)} 

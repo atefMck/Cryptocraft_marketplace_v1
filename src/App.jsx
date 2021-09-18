@@ -31,8 +31,8 @@ const App = () => {
   const [userId, setUserId] = useState('')
   const [username, setUsername] = useState('');
 
-  const logOut = () => {
-    cookie.remove('accessToken')
+  const logOut = async () => {
+    await cookie.remove('accessToken')
     setUserId('')
     setIsLogged(false); 
   }

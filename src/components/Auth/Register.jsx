@@ -35,7 +35,6 @@ const Register = (props) => {
       password
     }
     axios.post('http://localhost:3005/users/register', body).then(res => {
-      console.log(res);
       displayLoader(false);
       displaySuccess(true, username, email);
     })

@@ -59,7 +59,7 @@ const Account = (props) => {
 
   return (
     <div className={css(styles.container)}>
-      { createPanel && <CreatePanel hideCreatePanel={() => setCreatePanel(false)} tokens={user !== null && user && user.identity.tokens ? user.identity.tokens : []} />}
+      { createPanel && <CreatePanel hideCreatePanel={() => setCreatePanel(false)} tokens={user !== null && user && user.identity.tokens ? user.identity.tokens : []} balances={user !== null && user && user.identity.wallet && user.identity.wallet.balances ? user.identity.wallet.balances : []}/>}
       { linkPanel && <WalletLinker 
         linkingCode={user !== null && user && user.identity.linkingCode ? user.identity.linkingCode : ''}
         linkingCodeQr={user !== null && user && user.identity.linkingCodeQr ? user.identity.linkingCodeQr : ''}

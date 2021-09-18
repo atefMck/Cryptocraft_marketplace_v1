@@ -1,228 +1,105 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { StyleSheet, css } from 'aphrodite'
-import { faEthereum,  } from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeIcon  } from '@fortawesome/react-fontawesome'
-import profile from '../../assets/img/profile.jpg'
+import axios from 'axios'
+import cookie from 'react-cookies'
 
 const BuyPopup = (props) => {
-  const {token, listing} = props
+  const {listing, token} = props
 
+  const handlePurchase = () => {
+    const token = cookie.load('accessToken');
+    const options = {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    }
+    axios.post(`http://localhost:3005/transaction/sendTokenNFT/${listing._id}/${listing.seller}`, {}, options).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+  
   return (
-      <div className={css(styles.popcontainer)}>
-          <div className={css(styles.div1)}>
-          <h4 className={css(styles.text)}>Complete checkout</h4>
+    <div className={css(styles.container)}>
+      <h1>Buy now</h1>
+      <div className={css(styles.flexRow)}>
+        <div style={{textAlign: 'center', borderRight: '1px solid rgb(28,157,230)',}} className={css(styles.flexColumn)}>
+          <h2>{token.name}</h2>
+          <img src={token.metadata ? token.metadata.image : token.icon} alt="token" className={css(styles.image)}/>
+          <p>{listing && listing.description}</p>
         </div>
-        <div className={css(styles.div2)}>
-          <h2 >Item</h2>
-          <h2>Subtotal</h2>
-        </div>
-        <div className={css(styles.div3)}>
-          <div className={css(styles.div3left1)}>
-            <img src={token.metadata !== undefined ? token.metadata.image : token.icon} className={css(styles.img)} alt="token"/>
-            <div className={css(styles.div3left)}>
-              <p className={css(styles.p)}>{token.name}</p>
-              <p className={css(styles.p)}>Royalities: 10% @</p>
-            </div>
-          </div>
-        <div className={css(styles.div3left2)}>
-            <p className={css(styles.ppp)}> <FontAwesomeIcon icon={faEthereum}/>{listing.price}</p>
-            <p className={css(styles.pp)}>(${listing.price * 3978})</p>
-          </div>
-        </div>
-        <div className={css(styles.div3)}>
-          <p className={css(styles.pp)}>Total</p>
-          <div className={css(styles.div3left2)}>
-            <p className={css(styles.ppp)}> <FontAwesomeIcon icon={faEthereum}/>{listing.price}</p>
-            <p className={css(styles.pp)}>(${listing.price * 3978})</p>
-          </div>
-        </div>
-        <div className={css(styles.div5)}>
-        <label className='container'>
-          <span className={css(styles.terms)}>By checking this box, I agree to Crypto's</span> <span className={css(styles.terms2)}>Terms of Service</span>
-          <input type='checkbox' />
-          <span className='checkmark'></span>
-        </label>
-        </div>
-        <div className={css(styles.div6)}>
-          <button className={css(styles.button1)} disabled>Checkout</button>
-          <button className={css(styles.button2)}>Add Funds</button>
+        <div className={css(styles.flexColumn)}>
+          <h2>Total:</h2>
+          <ul style={{listStyle: 'none', padding: '0'}}>
+            <li className={css(styles.listItem)}><p>1x {token.name}</p> <p>{listing && listing.price}</p></li>
+            <li className={css(styles.listItem)}><p>10% Royalties</p> <p>{listing && listing.price / 10}</p></li>
+            <li className={css(styles.listItem)}><p>Gas Fee &#8771;</p> <p>{0.000381726}</p></li>
+            <li className={css(styles.listLine)}></li>
+            <li className={css(styles.listItem)}><p><b>Total</b></p> <p><b>{listing && (listing.price + (listing.price / 10) + 0.000381726).toFixed(2)}</b></p></li>
+          </ul>
         </div>
       </div>
-  )
-}
-
-const styles = StyleSheet.create({
-    pop:{
-      marginTop:'5%',
-      border:'5px solid red',
-      position:'fixed',
-      width:'900px',
-      height:'500px',
-      borderRadius:'10px',
-      display:'flex',
-      justifyContent:'center',
-      flexDirection:'column',
-      alignItems:'center'
-     
-      
-    },
+      <button className={css(styles.submit)} onClick={handlePurchase}>Check Out</button>
+    </div>
+    )
+  }
+  
+  const styles = StyleSheet.create({
     container: {
-      display:'flex',
-      justifyContent:'center',
-      position: 'fixed',
-      width: '100vw',
-      height: '100vh',
-      top: '0',
-      left: '0',
-      zIndex: '200',
-      
+      minWidth: '700px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      padding: '.3rem 2rem',
+      paddingBottom: '2rem',
+      flexWrap: 'wrap'
     },
-    div:{
-      paddingTop:'20px',
-      
-      alignSelf:'flex-end',
-      marginRight:'20px'
+    flexRow: {
+      margin: '25px 0',
+      display: 'flex',
+      width: '100%',
+      justifyContent: 'space-between',
+      alignItems: 'center'
     },
-    popcontainer:{
-     
-      width:'900px',
-      height:'auto',
-      backgroundColor:'white',
-      borderRadius:'10px',
-      display:'flex',
-      justifyContent:'center',
-      flexDirection:'column',
-      alignItems:'center'
+    flexColumn: {
+      width: '100%',
+      padding: '1rem'
     },
-    fa:{
-      
-      cursor:'pointer',
-      backgroundColor:'red',
-      alignSelf:'center'
-      
+    image: {
+      width: '200px',
+      borderRadius: '15px'
     },
-    div1:{
-      display:'flex',
-      justifyContent:'space-around',
-      alignItems:'center',
-      
-      textAlign:'center',
-      width:'100%',
-      height:'80px',
-      borderBottom:'solid 1px grey',
+    listItem: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      opacity: '.8',
+      fontSize: '1rem',
     },
-    text:{
-      fontSize:'25px'
+    listLine: {
+      width: '100%',
+      height: '1px',
+      backgroundColor: 'rgb(28,157,230)'
     },
-    
-    div2:{
-      paddingTop:'10px',
-      width:'90%',
-      borderBottom:'1px solid grey',
-      display:'flex',
-      justifyContent:'space-between',
-      height:'80px'
-    },
-    img:{
-      height:'90px',
-      width:'90px'
-    },
-    div3:{
-      marginTop:'20px',
-      width:'90%',
-      borderBottom:'1px solid grey',
-      display:'flex',
-      justifyContent:'space-between',
-      alignItems:'center',
-      paddingBottom:'10px',
-      
-    },
-    div3left1:{
-      width:'47%',
-      display:'flex',
-      flexDirection:'row',
-      justifyContent:'space-between',
-      
-      lineHeight:'normal',
-      
-      
-    },
-    div3left:{
-      paddingTop:'10px'
-      
-    },
-    p:{
-      margin:'0',
-      fontWeight:'bold',
-      ':nth-child(1)':{
-        color:'rgb(28, 157, 230)',
-      },
-      ':nth-child(2)':{
-        color:'black',
-      },
-      ':nth-child(3)':{
-        color:'grey',
-        fontSize:'15px',
-      },
-    },
-    div3left2:{
-      display:'flex',
-      flexDirection:'column'
-    },
-    pp:{
-      margin:'0',
-      fontWeight:'bold',
-    },
-    ppp:{
-      alignSelf:'flex-end',
-      margin:'0',
-      fontWeight:'bold',
-    },
-    div5:{
-      display:'flex',
-      justifyContent:'flex-start',
-      alignItems:'center',
-      marginTop:'20px',
-      marginBottom:'20px',
-      borderBottom:'grey 1px solid',
-      width:'90%',
-      height:'80px'
-      
-    },
-    terms:{
-      color:'grey'
-    },
-    terms2:{
-      color:'rgb(28, 157, 230)'
-    },
-    button1:{
-      backgroundColor:'rgb(28, 157, 230)',
-      border:'none',
+    submit: {
+      backgroundColor: 'rgb(28,157,230)',
+      width: 'fit-content',
+      height: '50px',
+      margin: 'auto',
+      border: 'none',
       color: 'white',
-      padding: '15px 32px',
-      textAlign: 'center',
-      textDecoration: 'none',
-      display: 'inline-block',
-      fontSize: '16px',
-      margin: '4px 2px',
+      padding: '.7rem 1rem',
+      fontWeight: 'bolder',
+      fontSize: '1.2rem',
       cursor: 'pointer',
-      borderRadius: '4px',
+      transition: '.6s',
+      borderRadius: '8px',
+      ':hover': {
+        color: 'rgb(28,157,230)',
+        backgroundColor: 'white',
+        border: '2px solid rgb(28,157,230)'
+      }
     },
-    button2:{
-      backgroundColor:'white',
-      border:'1px solid rgb(28, 157, 230)',
-      color: 'rgb(28, 157, 230)',
-      padding: '15px 32px',
-      textAlign: 'center',
-      textDecoration: 'none',
-      display: 'inline-block',
-      fontSize: '16px',
-      margin: '4px 2px',
-      cursor: 'pointer',
-      borderRadius: '4px',
-    }
-    
-    
   })
-
-export default BuyPopup
+  
+  export default BuyPopup

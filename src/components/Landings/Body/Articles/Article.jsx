@@ -10,7 +10,7 @@ const Article = (props) =>{
       <div className={css(styles.text)}>
         <h6>About Cryptocraft</h6>
         <h2 style={{margin: '10px 0', fontSize: '1.7rem'}}>Made for players, by players</h2>
-        <p style={{color: 'rgb(217, 217, 217)'}}>GTA World was created with the goal to provide a fun, realistic and dynamic roleplay experience.</p>
+        <p style={{color: 'rgb(217, 217, 217)'}}>Cryptocraft was created with the goal to provide a fun, realistic and dynamic roleplay experience.</p>
         <p style={{color: 'rgb(217, 217, 217)'}}>Our development team is always looking to bring unique features to the server, and thanks to suggestions coming from players - we constantly add new exciting features to the server.</p>
         <button className={css(styles.readMore)}>Read more</button>
       </div>   

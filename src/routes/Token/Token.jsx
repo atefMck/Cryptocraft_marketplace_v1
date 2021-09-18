@@ -18,6 +18,8 @@ const Token = (props) => {
   const [buyPopup, setBuyPopup] = useState(false);
   const history = useHistory()
 
+  const mainListing = listings[0]
+
   const redirectUser = (username) => {
     history.push(`/user/${username}`)
   }
@@ -46,6 +48,10 @@ const Token = (props) => {
             <p className={css(styles.textSmall)} >&nbsp;{token.likes}</p>
           </div>
           <img src={token.metadata !== undefined ? token.metadata.image : token.icon} alt="" className={css(styles.tokenImage)}/>
+        </div>
+        <div className={css(styles.tableContainer)}>
+          <h2>Description</h2>
+          <p>{mainListing && mainListing.description}</p>
         </div>
       </div>
       
@@ -104,12 +110,12 @@ const Token = (props) => {
               </tr>
             </thead>
             <tbody>
-            {(listings.offers !== undefined && listings.offers.length > 0) ? listings.offers.map(offer => (
-              <tr key={offer._id}>
-                <td>{offer.price} ETH</td>
-                <td>${offer.price * 3200}</td>
+            {(listings[0] && listings[0].offers !== undefined && listings[0].offers.length > 0) ? listings[0].offers.map(offer => (
+              <tr key={offer && offer._id}>
+                <td>{offer && offer.price} ETH</td>
+                <td>${offer && offer.price * 3200}</td>
                 <td>--</td>
-                <td><a onClick={() => redirectUser(offer.from)}>{offer.from}</a></td>
+                <td><a onClick={() => redirectUser(offer && offer.from && offer.from.username)}>{offer && offer.from && offer.from.username}</a></td>
                 <td><button className={css(styles.listingBuy)}>Buy</button></td>
               </tr>
             )): <tr><th colSpan="4"><h3>No offers yet</h3></th></tr>}
