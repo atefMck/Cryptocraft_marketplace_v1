@@ -15,7 +15,7 @@ const Token = (props) => {
   const [token, setToken] = useState({});
   const [listings, setListings] = useState([]);
   const [offerPopup, setOfferPopup] = useState(false);
-  const [buyPopup, setBuyPopup] = useState(false);
+  const [buyPopup, setBuyPopup] = useState(true);
   const history = useHistory()
 
   const mainListing = listings[0]

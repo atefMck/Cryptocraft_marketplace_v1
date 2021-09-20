@@ -6,7 +6,7 @@ const Loader = () => {
   const loader = useRef();
 
   useEffect(() => {            
-    gsap.to(loader.current, {rotate: 360, repeat: -1, duration: 1, ease: 'none'})
+    gsap.to(loader.current, {rotate: 360, repeat: -1, duration: 3, ease: 'power1'})
     
   });
 

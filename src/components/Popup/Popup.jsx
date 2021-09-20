@@ -3,12 +3,13 @@ import { FontAwesomeIcon  } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import OfferPopup from './OfferPopup'
 import BuyPopup from './BuyPopup'
+
 import React from 'react';
 import './pop.css'
+
 const Popup = (props) => {
   const {setOfferPopup, setBuyPopup, offerPopup, buyPopup, token , listing} = props
-
- 
+  
 
   return (
     <div className={css(styles.container)} style={{backdropFilter: 'blur(5px)'}}>
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
   popupContainer: {
     backgroundColor: 'white',
     borderRadius: '15px',
-    position: 'relative'
+    position: 'relative',
   },
   close: {
     position: 'absolute',

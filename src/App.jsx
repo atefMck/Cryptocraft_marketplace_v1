@@ -17,6 +17,7 @@ import Stats from './routes/Stats/Stats';
 import HeaderNav from './components/Navigation/HeaderNav';
 import Footer from './components/Footer/Footer';
 import Auth from './components/Auth/Auth';
+import WalletPanel from './components/WalletPanel/WalletPanel';
 
 import './App.css';
 
@@ -58,6 +59,7 @@ const App = () => {
   return (
     <Router>
       <HeaderNav setRegister={setRegister} setLogin={setLogin} isLogged={isLogged} logOut={logOut} username={username}/>
+      {isLogged && <WalletPanel isLogged={isLogged} username={username}/>}
       <div className='App'>
         
         <Switch>
